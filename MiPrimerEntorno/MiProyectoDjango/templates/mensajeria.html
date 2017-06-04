@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+  
+</head>
+<style type="text/css">
+
+body{
+
+  margin-left: 5%;
+  margin-right: 5%; 
+
+}
+input[type="checkbox"]
+{
+
+  font-size: 22px;
+}
+
+
+
+  @media only screen and (max-width: 800px) {
+  body{
+
+    background: rgba(11,62,87,.50);
+     color: #FFFFFF;
+     font-size: 20px;
+
+    
+  }
+  button{
+    width: 100%;
+    height: 100%;
+  }
+
+}
+@media only screen and (max-width: 600px) {
+body{
+
+    background: rgba(23,65,139,.50);
+    font-size: 18px; 
+  }
+  button{
+    width: 50%;
+    height: 50%;
+  }
+
+}
+@media only screen and (max-width: 400px) {
+
+  body{
+
+    background:rgba(30,146,231,.50);
+    margin: 1%;
+    font-size: 16px;
+  }
+  button{
+    width: auto;
+    height: auto;
+  }
+
+}
+
+</style>
+<body>
+	<h1>Mis notificaciones clase</h1>
+	
+	<div id="sign-in-status"></div>
+    <div id="sign-in"></div>
+    <div id="account-details"></div>	
+
+	<form action="/mensajeria/" method="POST">
+			{% csrf_token %}
+		<ul>
+			{% for item in devices %}
+				
+        <input name="{{item.dev_id}}" id="checkbox-mini-0" data-mini="true" type="checkbox">{{item.name}}<br>  
+				
+			{% endfor %}
+			
+		</ul>
+     <div class="form-group">
+        <label for="comment">Mensaje:</label>
+        <textarea class="form-control" rows="5" id="comment" name="mensaje" placeholder="Introduce Mensaje"></textarea>
+    </div> 
+
+    <button type="button" class="btn btn-primary btn-md" type="submit" value="Enviar">Enviar</button>
+
+	<!--	<input type="submit" value="Enviar" >-->
+		
+	</form>
+
+
+	
+<script src="https://www.gstatic.com/firebasejs/4.1.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyBSHn3FTruZtqHKnddeFcUceYgN8VFDolc",
+    authDomain: "misnotificacionesclase-5f5f5.firebaseapp.com",
+    databaseURL: "https://misnotificacionesclase-5f5f5.firebaseio.com",
+    projectId: "misnotificacionesclase-5f5f5",
+    storageBucket: "misnotificacionesclase-5f5f5.appspot.com",
+    messagingSenderId: "1047307369944"
+  };
+  firebase.initializeApp(config);
+
+
+	  initApp = function() {
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // User is signed in.
+            var displayName = user.displayName;
+            var email = user.email;
+            var emailVerified = user.emailVerified;
+            var photoURL = user.photoURL;
+            var uid = user.uid;
+            var providerData = user.providerData;
+            user.getToken().then(function(accessToken) {
+              document.getElementById('sign-in-status').textContent = 'Signed in';
+              document.getElementById('sign-in').textContent = 'Sign out';
+              document.getElementById('account-details').textContent = JSON.stringify({
+                displayName: displayName,
+                email: email,
+                emailVerified: emailVerified,
+                photoURL: photoURL,
+                uid: uid,
+                accessToken: accessToken,
+                providerData: providerData
+              }, null, '  ');
+            });
+          } else {
+            // User is signed out.
+            document.getElementById('sign-in-status').textContent = 'Signed out';
+            document.getElementById('sign-in').textContent = 'Sign in';
+            document.getElementById('account-details').textContent = 'null';
+          }
+        }, function(error) {
+          console.log(error);
+        });
+      };
+
+      window.addEventListener('load', function() {
+        initApp()
+      });
+
+	</script>
+</body>
+</html> 

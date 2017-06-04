@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+
+	<title>Document</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" 
+	href="{% static 'estilos.css' %}">
+	
+</head>
+<body>
+	<a href="{% url 'catalogos:nuevo_producto' %}">Nuevo Producto</a>
+	<ul>
+		{% for item  in productos  %}
+			<li>
+				<a href="{% url 'catalogos:detalle' pk=item.pk %}"> {{item.producto}} </a>
+				<img src="{{item.imagen.url}}">
+			</li>
+			
+		{% endfor %}
+	</ul>
+</body>
+</html>

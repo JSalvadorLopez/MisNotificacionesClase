@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load staticfiles %}
+	<meta charset="UTF-8">
+	<title>{{product.producto}}</title>
+	<link rel="stylesheet" type="text/css" 
+	href="{% static 'estilos.css' %}"
+	>
+</head>
+<body>
+	<h1>{{product.producto}}</h1>
+	
+	<p>{{product.categoria}} | {{product.pMenudeo}}</p>
+	<img src="{{product.imagen.url}}">
+</body>
+</html>

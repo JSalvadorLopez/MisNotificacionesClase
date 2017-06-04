@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	{% load staticfiles %}
+	<link rel="stylesheet" type="text/css" href="{% static "css/estilos.css" %}">
+</head>
+<body>
+	<h1>Listado de categorias</h1>
+	<ul>
+		{% for item in categorias %}
+			<li>{{item.descripcion}}</li>	
+		{% endfor %}
+	</ul>
+</body>
+</html>
